@@ -1,19 +1,10 @@
-from ast import In, arg
-from asyncio.windows_events import NULL
-from distutils.log import info
-from lib2to3.pgen2.token import EQUAL
-from types import NoneType
 import mysql.connector
 
 class Banco_De_Dados():
     def __init__(self):
         pass
 
-    def Criar_Banco_De_Dados(self, nome):
-        cursor.execute(f"CREATE DATABASE {nome}")
-        print('Banco de dados criado')
-
-    def Conectar_Banco_De_Dados(self, host, user, password, database):
+    def Conectar_Servidor(self, host, user, password, database):
         try:
             global data_base
             global cursor
@@ -33,11 +24,17 @@ class Banco_De_Dados():
                 print('Conectado com Sucesso')
             else:
                 print("Verifique os dados e tente novamente")
-    
+
     def Desconectar_Banco_De_Dados(self):
         if data_base.is_connected():
             data_base.close()
             print('MySQL desconectado')
+                
+    def Criar_Banco_De_Dados(self, nome):
+        cursor.execute(f"CREATE DATABASE {nome}")
+        print('Banco de dados criado')
+
+    
 
     def Cursor_Banco_De_Dados():
         global cursor
@@ -52,7 +49,7 @@ class Banco_De_Dados():
         cursor.execute(f"DROP TABLE {nome}")
         print('Tabela excluida com sucesso')
         
-    def Inserir_Valores_Na_Tabela_Banco_De_Dados(self, id, nome, preço, quantidade):
+    def Inserir_Produtos_Na_Tabela(self, id, nome, preço, quantidade):
         
         try:
 
@@ -87,7 +84,7 @@ class Banco_De_Dados():
         finally:
             print('Rotina Finalizada')
 
-    def Excluir_valor_por_id(self, Id):
+    def Excluir_Produto_Por_Id(self, Id):
         cursor.execute(f"DELETE FROM Produtos WHERE id = {Id}")
         data_base.commit()
         print(f'Produto excluido com sucesso')
